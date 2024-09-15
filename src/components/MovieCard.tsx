@@ -1,12 +1,14 @@
 import React from 'react';
 import { Movie } from '../types';
 
-interface MovieCardProps {
+export interface MovieCardProps {
   movie: Movie;
   onAdd?: () => void;
+  isTrending?: boolean;
+  fullPoster?: boolean; // Add this line
 }
 
-const MovieCard: React.FC<MovieCardProps> = ({ movie, onAdd }) => {
+const MovieCard: React.FC<MovieCardProps> = ({ movie, onAdd, isTrending }) => {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
       <img 
@@ -20,9 +22,15 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, onAdd }) => {
         {onAdd && (
           <button 
             onClick={onAdd}
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            className="absolute top-2 right-2 bg-indigo-600 text-white rounded-full p-1 hover:bg-indigo-700 transition-colors duration-200"
           >
-            Add to Watched
+            {isTrending ? (
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              </svg>
+            ) : (
+              'Add to Watchlist'
+            )}
           </button>
         )}
       </div>
